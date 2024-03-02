@@ -84,17 +84,20 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
                     return "You are lucky. You haven`t been born!";
                 }
 
-                var lastBirthday = new DateTime(DateTime.Now.Year, _birthDate.Month, _birthDate.Day);
-                var days = (DateTime.Now - lastBirthday).Days;
-
+                var days = 0;
                 var months = 0;
+
                 if (DateTime.Now.Month > _birthDate.Month || (DateTime.Now.Month == _birthDate.Month && DateTime.Now.Day >= _birthDate.Day))
                 {
-                    months += DateTime.Now.Month - _birthDate.Month;
+                    months = DateTime.Now.Month - _birthDate.Month;
+                    DateTime lastBirthday = new DateTime(DateTime.Now.Year, months, _birthDate.Day);
+                    days = (DateTime.Now - lastBirthday).Days;
                 }
                 else
                 {
-                    months += DateTime.Now.Month - _birthDate.Month - 1;
+                    months = 12 - _birthDate.Month + DateTime.Now.Month;
+                    DateTime lastBirthday = new DateTime(DateTime.Now.Year, DateTime.Now.Month -  1, _birthDate.Day);
+                    days = (DateTime.Now - lastBirthday).Days;
                 }
                 return $"{age} years; {months} months; {days} days";
             }

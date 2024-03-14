@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Tool\Controls\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

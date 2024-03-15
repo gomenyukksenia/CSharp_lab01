@@ -1,4 +1,6 @@
-﻿using KMA.CSharp2024.Gomenyuk_lab01.ViewModels;
+﻿using KMA.CSharp2024.Gomenyuk_lab01.Models;
+using KMA.CSharp2024.Gomenyuk_lab01.ViewModels;
+using System.Net.Mail;
 using System.Reflection.Emit;
 using System.Text;
 using System.Windows;
@@ -10,49 +12,92 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace KMA.CSharp2024.Gomenyuk_lab01
 {
     public partial class MainWindow : Window
     {
-        public DateTime Birthday
+        private DateTime PersonBirthday
         {
             get
             {
                 return (DateTime)BDpicker.SelectedDate;
             }
-            set
+        }
+
+        private string PersonFirstName
+        {
+            get
             {
-                BDpicker.SelectedDate = value;
+                return FName.Text;
             }
         }
 
-        private BirthdayViewModel _viewModel;
+        private string PersonSecondName
+        {
+            get
+            {
+                return SName.Text;
+            }
+        }
+
+        private string PersonEmail
+        {
+            get
+            {
+                return Email.Text;
+            }
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _viewModel = new BirthdayViewModel(DateTime.Now);
+            Procider.IsEnabled = false;
         }
 
         private void BDsetter_Click(object sender, RoutedEventArgs e)
         {
-            if (BDpicker.SelectedDate == null) return;
-
-            _viewModel.UpdateDate(Birthday);
-            UpdateControls();
         }
 
-        private void UpdateControls()
+        private void UpdateControls(PersonViewModel vm)
         {
-            var prompt = _viewModel.Greating();
-            MessageBox.Show(prompt);
+            IsAdult.Text = "Adult or child: " + vm.AgeDescription;
+            SunSign.Text = "Sun Sign: " + vm.sunSignName;
+            ChSign.Text = "Chinese Sign: " + vm.chineseSignName;
+            IsBirthdayToday.Text = "BD: " + vm.IsBirthdayToday;
+        }
 
-            string description = "Your birth day is " + _viewModel.Description();
-            description += "\nYour chinese zodiac sign: " + _viewModel.ChinesZodiacName();
-            description += "\nYour western zodiac sign: " + _viewModel.WesternZodiacName();
+        private async void Procider_Click(object sender, RoutedEventArgs e)
+        {
+            string fName = PersonFirstName;
+            string sName = PersonSecondName;
+            string email = PersonEmail;
+            DateTime bd = PersonBirthday;
 
-            BDlabel.Text = description;
-            AgeView.Text = "You age is " + _viewModel.AgeDescription();
+            Procider.IsEnabled = false;
+            IsAdult.Text = "Processing...";
+            SunSign.Text = "Processing...";
+            ChSign.Text = "Processing...";
+
+            PersonViewModel vm = await Task.Run(() => new PersonViewModel(fName, sName, email, bd));
+            await Task.Delay(2000); // emulate calculation here...
+
+            Procider.IsEnabled = true;
+
+            UpdateControls(vm);
+        }
+        private void textChanged(object sender, EventArgs e)
+        {
+            string fName = PersonFirstName;
+            string sName = PersonSecondName;
+            string email = PersonEmail;
+
+            Procider.IsEnabled = PersonViewModel.isNameValid(fName) 
+                && PersonViewModel.isNameValid(sName)
+                && PersonViewModel.isEmailValid(email)
+                && BDpicker.SelectedDate != null;
         }
     }
 }

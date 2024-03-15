@@ -45,9 +45,9 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
         public BirthDate(DateTime birthDate)
         {
             _birthDate = birthDate;
-    }
+        }
 
-        public DateTime BDdate 
+        public DateTime BDdate
         {
             get
             {
@@ -62,7 +62,7 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
 
         public int Age
         {
-            get 
+            get
             {
                 var age = DateTime.Now.Year - _birthDate.Year;
 
@@ -79,7 +79,7 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             get
             {
                 var age = Age;
-                if(age < 0)
+                if (age < 0)
                 {
                     return "You are lucky. You haven`t been born!";
                 }
@@ -96,7 +96,7 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
                 else
                 {
                     months = 12 - _birthDate.Month + DateTime.Now.Month;
-                    DateTime lastBirthday = new DateTime(DateTime.Now.Year, DateTime.Now.Month -  1, _birthDate.Day);
+                    DateTime lastBirthday = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, _birthDate.Day);
                     days = (DateTime.Now - lastBirthday).Days;
                 }
                 return $"{age} years; {months} months; {days} days";
@@ -111,9 +111,9 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             }
         }
 
-       public ChineseZodiac chineseZodiac
-        { 
-            get 
+        public ChineseZodiac chineseZodiac
+        {
+            get
             {
                 return (ChineseZodiac)(_birthDate.Year % 12);
             }
@@ -167,6 +167,70 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
                         break;
                 }
                 return zodiac;
+            }
+        }
+        public static string WesternZodiacName(WesternZodiac zd)
+        {
+            switch (zd)
+            {
+                case WesternZodiac.Capricorn:
+                    return "Capricorn";
+                case WesternZodiac.Aquarius:
+                    return "Aquarius";
+                case WesternZodiac.Pisces:
+                    return "Pisces";
+                case WesternZodiac.Aries:
+                    return "Aries";
+                case WesternZodiac.Taurus:
+                    return "Taurus";
+                case WesternZodiac.Gemini:
+                    return "Gemini";
+                case WesternZodiac.Cancer:
+                    return "Cancer";
+                case WesternZodiac.Leo:
+                    return "Leo";
+                case WesternZodiac.Virgo:
+                    return "Virgo";
+                case WesternZodiac.Libra:
+                    return "Libra";
+                case WesternZodiac.Scorpio:
+                    return "Scorpio";
+                case WesternZodiac.Sagittarius:
+                    return "Sagittarius";
+                default:
+                    return "Unknown";
+            }
+        }
+
+        public static string ChinesZodiacName(ChineseZodiac cz)
+        {
+            switch (cz)
+            {
+                case ChineseZodiac.Monkey:
+                    return "Monkey";
+                case ChineseZodiac.Rooster:
+                    return "Rooster";
+                case ChineseZodiac.Dog:
+                    return "Dog";
+                case ChineseZodiac.Pig:
+                    return "Pig";
+                case ChineseZodiac.Rat:
+                    return "Rat";
+                case ChineseZodiac.Ox:
+                    return "Ox";
+                case ChineseZodiac.Tiger:
+                    return "Tiger";
+                case ChineseZodiac.Rabbit:
+                    return "Rabbit";
+                case ChineseZodiac.Dragon:
+                    return "Dragon";
+                case ChineseZodiac.Snake:
+                    return "Snake";
+                case ChineseZodiac.Horse:
+                    return "Horse";
+                case ChineseZodiac.Sheep:
+                    return "Sheep";
+                default: return "Unknown";
             }
         }
     }

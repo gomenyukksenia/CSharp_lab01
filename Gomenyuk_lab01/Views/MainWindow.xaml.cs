@@ -1,5 +1,7 @@
 ﻿using KMA.CSharp2024.Gomenyuk_lab01.Models;
 using KMA.CSharp2024.Gomenyuk_lab01.ViewModels;
+using System;
+using System.Linq.Expressions;
 using System.Net.Mail;
 using System.Reflection.Emit;
 using System.Text;
@@ -81,12 +83,35 @@ namespace KMA.CSharp2024.Gomenyuk_lab01
             SunSign.Text = "Processing...";
             ChSign.Text = "Processing...";
 
-            PersonViewModel vm = await Task.Run(() => new PersonViewModel(fName, sName, email, bd));
-            await Task.Delay(2000); // emulate calculation here...
+            try
+            {
+                PersonViewModel vm = await Task.Run(() => new PersonViewModel(fName, sName, email, bd));
+                await Task.Delay(2000); // emulate calculation here...
+
+                UpdateControls(vm);
+            }
+
+            catch(ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch(WrongNameException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (WrongEmailException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("Unknown error");
+            }
 
             Procider.IsEnabled = true;
-
-            UpdateControls(vm);
         }
         private void textChanged(object sender, EventArgs e)
         {

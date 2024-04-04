@@ -37,7 +37,7 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
         Sagittarius,
         Capricorn
     }
-
+    [Serializable]
     internal class BirthDate
     {
         private DateTime _birthDate;
@@ -59,7 +59,13 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
                 _birthDate = value;
             }
         }
-
+        public string BDateAsString
+        {
+            get
+            { 
+                return _birthDate.ToString("d");
+            }
+        }
         public int Age
         {
             get
@@ -167,6 +173,21 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
                         break;
                 }
                 return zodiac;
+            }
+        }
+        public string westZodiacName
+        {
+            get
+            {
+                return WesternZodiacName(westZodiac);
+            }
+        }
+
+        public string ChZodiacName
+        {
+            get
+            {
+                return ChinesZodiacName(chineseZodiac);
             }
         }
         public static string WesternZodiacName(WesternZodiac zd)

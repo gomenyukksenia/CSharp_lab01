@@ -4,38 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500">
+        Title="MainWindow" Height="700" Width="700">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Name="NameView" Grid.Row="0">Enter your first name</TextBlock>
-        <TextBox Name="FName" TextChanged="textChanged" Grid.Row="0" HorizontalAlignment="Right" Width="300"></TextBox>
-
-        <TextBlock Name="SurnameView" Grid.Row="1">Enter your second name</TextBlock>
-        <TextBox Name="SName" TextChanged="textChanged" Grid.Row="1" HorizontalAlignment="Right" Width="300"></TextBox>
-
-        <TextBlock Name="EmailView" Grid.Row="2">Enter your email</TextBlock>
-        <TextBox Name="Email" TextChanged="textChanged" Grid.Row="2" HorizontalAlignment="Right" Width="300"></TextBox>
-
-        <TextBlock Grid.Row="3">Enter your birthday</TextBlock>
-        <DatePicker Name="BDpicker" SelectedDateChanged="textChanged" Grid.Row="3" HorizontalAlignment="Right"  Width="300"></DatePicker>
-
-        <TextBlock Name="IsAdult" Grid.Row="4">Adult or child:</TextBlock>
-        <TextBlock Name="SunSign" Grid.Row="5">Sun sign:</TextBlock>
-        <TextBlock Name="ChSign" Grid.Row="6">Chinese sign:</TextBlock>
-        <TextBlock Name="IsBirthdayToday" Grid.Row="7">Birthday:</TextBlock>
-
         <Button Name="Procider" 
                 Content="Proceed" HorizontalAlignment="Center" Click="Procider_Click" Height="30" Width="200" Margin="0,25,0,-5" Grid.Row="8"/>
+
+        <DataGrid Name="jail" ItemsSource="{Binding}" AutoGenerateColumns="False" Sorting="custom_Sorting">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name"  Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding EmailAddress}"/>
+                <DataGridTextColumn Header="Birth Date" Binding="{Binding BirthDate.BDateAsString}"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding BirthDate.Age}"/>
+                <DataGridTextColumn Header="Mature" Binding="{Binding AgeDescription}"/>
+                <DataGridTextColumn Header="West Zodiac" Binding="{Binding BirthDate.westZodiacName}"/>
+                <DataGridTextColumn Header="Chinese Zodiac" Binding="{Binding BirthDate.ChZodiacName}"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -7,11 +7,13 @@ using System.Windows;
 
 namespace KMA.CSharp2024.Gomenyuk_lab01.Models
 {
+    [Serializable]
     class Person
     {
         private string _firstName;
         private string _lastName;
         private string _emailAddress;
+        private string _emailDomain;
         private BirthDate _birthDate;
         private bool _isAdult = false;
         private bool _isBirthdayToday = false;
@@ -23,6 +25,8 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             _firstName = firstName;
             _lastName = lastName;
             _emailAddress = emailAddress;
+            int aIndex = _emailAddress.IndexOf("@");
+            _emailDomain = _emailAddress.Substring(aIndex + 1);
             _birthDate = new BirthDate(birthDate);
 
             _isAdult = _birthDate.Age >= 18;
@@ -44,6 +48,10 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             { 
                 return _firstName;
             }
+            set
+            {
+                _firstName = value;
+            }
         }
 
         public string LastName
@@ -52,6 +60,10 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             { 
                 return _lastName; 
             } 
+            set 
+            {
+                _lastName = value;
+            }
         }
 
         public string EmailAddress
@@ -60,13 +72,34 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             {
                 return _emailAddress;
             } 
+            set 
+            { 
+                _emailAddress = value;
+            }
         }
+
+        public string EmailDomain
+        {
+            get
+            {
+                return _emailDomain;
+            }
+            set
+            {
+                _emailDomain = value;
+            }
+        }
+
 
         public BirthDate BirthDate
         {
             get
             {
                 return _birthDate;
+            }
+            set 
+            { 
+                _birthDate = value;
             }
         }
 
@@ -76,13 +109,38 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             { 
                 return _isAdult;
             }
+            set
+            {
+                _isAdult = value;
+            }
         }
+        public string AgeDescription
+        {
+            get
+            {
+                if (BirthDate.Age < 0)
+                {
+                    return "You don`t exsist yet, too young!";
+                }
+                else if (BirthDate.Age > 135)
+                {
+                    return "You don`t exsist, too old!";
+                }
+
+                return IsAdult ? "Adult" : "Child yet";
+            }
+        }
+
 
         public WesternZodiac SunSign
         {
             get
             {
                 return _sunSign;
+            }
+            set
+            {
+                _sunSign = value;
             }
         }
 
@@ -92,6 +150,10 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             {
                 return _chineseSign;
             }
+            set
+            {
+                _chineseSign = value;
+            }
         }
 
         public bool IsBirthday
@@ -99,6 +161,10 @@ namespace KMA.CSharp2024.Gomenyuk_lab01.Models
             get 
             { 
                 return _isBirthdayToday; 
+            }
+            set
+            {
+                _isBirthdayToday = value;
             }
         }
     }
